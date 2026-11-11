@@ -259,16 +259,16 @@ def search():
         # esta vez en el ORDER BY. Aquí NO se puede usar un
         # parámetro "?": los nombres de columnas no se parametrizan.
         # ---------------------------------------------------
-        raw_query = f"""
-            SELECT id, title, author, category
-            FROM   books
-            WHERE  title || ' ' || author || ' ' || category LIKE '%{term}%'
-            ORDER BY {sort}
-        """
+        raw_query = (
+            "SELECT id, title, author, category FROM books "
+            "WHERE title || ' ' || author || ' ' || category LIKE ? "
+            f"ORDER BY {sort}"
+        )
+        like_pattern = f"%{term}%"
 
         conn = get_connection()
         try:
-            books = conn.execute(raw_query).fetchall()
+            books = conn.execute(raw_query, (like_pattern,)).fetchall()
         except Exception as e:
             flash(f"Error en la base de datos: {e}", "error")
         conn.close()

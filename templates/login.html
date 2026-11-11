@@ -1,0 +1,53 @@
+{% extends "layout.html" %}
+{% block content %}
+
+<div class="page-header">
+  <h1>🔓 Laboratorio de Login Vulnerable</h1>
+  <p class="subtitle">ISW-622 – Pruebas de Software | Universidad Técnica Nacional</p>
+</div>
+
+<div class="card warning-card">
+  <h3>⚠️ Entorno de laboratorio académico</h3>
+  <p>Esta aplicación contiene <strong>vulnerabilidades intencionales</strong> para análisis y corrección.
+     Uso exclusivo en entorno local controlado.</p>
+</div>
+
+<div class="two-col">
+
+  <div class="card">
+    <h2>Iniciar sesión</h2>
+    <form method="post" autocomplete="off">
+      <div class="form-group">
+        <label for="username">Usuario</label>
+        <input type="text" id="username" name="username" placeholder="Ingrese su usuario" required>
+      </div>
+      <div class="form-group">
+        <label for="password">Contraseña</label>
+        <input type="password" id="password" name="password" placeholder="Ingrese su contraseña" required>
+      </div>
+      <button type="submit" class="btn-primary">Iniciar sesión</button>
+    </form>
+  </div>
+
+  <div class="card info-card">
+    <h3>Credenciales de prueba</h3>
+    <table class="creds-table">
+      <tr><th>Usuario</th><th>Contraseña</th><th>Rol</th></tr>
+      <tr><td>admin</td><td>Admin123</td><td>admin</td></tr>
+      <tr><td>analyst</td><td>Analyst123</td><td>user</td></tr>
+      <tr><td>student</td><td>Student123</td><td>user</td></tr>
+    </table>
+    <hr>
+    <h3>🎯 Su misión</h3>
+    <ol>
+      <li>Inicie sesión con las credenciales normales.</li>
+      <li>Explore la aplicación y observe el comportamiento.</li>
+      <li>Analice el código en <code>app.py</code>.</li>
+      <li>Ataque: demuestre cada vulnerabilidad con evidencia.</li>
+      <li>Corrija y compruebe con <code>check_fixes.py</code>.</li>
+    </ol>
+  </div>
+
+</div>
+
+{% endblock %}

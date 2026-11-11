@@ -1,0 +1,19 @@
+{% extends "layout.html" %}
+{% block content %}
+
+<div class="page-header">
+  <h1>📖 Detalle del libro</h1>
+</div>
+
+{% if book %}
+<div class="card">
+  <h2>{{ book["title"] }}</h2>
+  <p><strong>Autor:</strong> {{ book["author"] }}</p>
+  <p><strong>Categoría:</strong> <span class="category-badge">{{ book["category"] }}</span></p>
+  <p><strong>Código del libro:</strong> {{ book["id"] }}</p>
+</div>
+{% endif %}
+
+<p><a href="{{ url_for('search') }}">← Volver a la búsqueda</a></p>
+
+{% endblock %}

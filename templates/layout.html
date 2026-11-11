@@ -1,0 +1,42 @@
+<!doctype html>
+<html lang="es">
+<head>
+  <meta charset="utf-8">
+  <title>{{ title or "Security Lab – ISW-622" }}</title>
+  <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+</head>
+<body>
+
+  <!--
+    V-07: El enlace "Admin" aparece en la navegación para TODOS los
+    usuarios autenticados, independientemente de su rol. Un usuario
+    con rol "user" verá el enlace aunque el backend lo bloquee.
+    La interfaz no debe exponer opciones que el usuario no puede usar.
+  -->
+  <nav class="navbar">
+    <span class="nav-brand">🔐 Security Lab</span>
+    {% if session.get('username') %}
+      <div class="nav-links">
+        <a href="{{ url_for('dashboard') }}">Dashboard</a>
+        <a href="{{ url_for('search') }}">Búsqueda</a>
+        <a href="{{ url_for('admin') }}">Admin</a>
+        <span class="nav-user">{{ session.get('username') }} ({{ session.get('role') }})</span>
+        <a href="{{ url_for('logout') }}" class="btn-logout">Salir</a>
+      </div>
+    {% endif %}
+  </nav>
+
+  <div class="container">
+    {% with messages = get_flashed_messages(with_categories=true) %}
+      {% if messages %}
+        {% for category, message in messages %}
+          <div class="alert alert-{{ category }}">{{ message }}</div>
+        {% endfor %}
+      {% endif %}
+    {% endwith %}
+
+    {% block content %}{% endblock %}
+  </div>
+
+</body>
+</html>

@@ -1,0 +1,22 @@
+{% extends "layout.html" %}
+{% block content %}
+
+<div class="page-header">
+  <h1>Dashboard</h1>
+</div>
+
+<div class="card">
+  <h2>Bienvenido, {{ username }}</h2>
+  <p>Rol actual: <strong class="role-badge role-{{ role }}">{{ role }}</strong></p>
+  <p>Navegue usando el menú superior para explorar las funcionalidades disponibles.</p>
+</div>
+
+<div class="card info-card">
+  <h3>📋 Módulos disponibles</h3>
+  <ul>
+    <li><strong>Búsqueda</strong> — Buscar libros en el catálogo.</li>
+    <li><strong>Admin</strong> — Panel de administración (solo rol admin).</li>
+  </ul>
+</div>
+
+{% endblock %}

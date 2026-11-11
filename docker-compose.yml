@@ -1,0 +1,12 @@
+services:
+  web:
+    build: .
+    ports:
+      - "127.0.0.1:5000:5000"
+    volumes:
+      - ./db:/app/db
+    environment:
+      # V-04: su código debe leer esta variable (os.environ.get("SECRET_KEY")).
+      - SECRET_KEY=${SECRET_KEY:-clave-local-del-laboratorio-cambiela}
+      # V-05: su código debe leer esta variable en lugar de debug=True.
+      - FLASK_DEBUG=0

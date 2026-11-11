@@ -1,0 +1,64 @@
+{% extends "layout.html" %}
+{% block content %}
+
+<div class="page-header">
+  <h1>🔍 Búsqueda de Libros</h1>
+</div>
+
+<div class="card">
+  <form method="post">
+    <div class="form-group">
+      <label for="term">Término de búsqueda</label>
+      <input type="text" id="term" name="term" placeholder="Buscar por título, autor o categoría...">
+    </div>
+    <div class="form-group">
+      <label for="sort">Ordenar por</label>
+      <select id="sort" name="sort">
+        <option value="title"    {% if sort == 'title' %}selected{% endif %}>Título</option>
+        <option value="author"   {% if sort == 'author' %}selected{% endif %}>Autor</option>
+        <option value="category" {% if sort == 'category' %}selected{% endif %}>Categoría</option>
+      </select>
+    </div>
+    <button type="submit" class="btn-primary">Buscar</button>
+  </form>
+</div>
+
+{% if raw_query %}
+<!--
+  V-06: La consulta SQL ejecutada se muestra en pantalla.
+  Esto expone la estructura interna de la base de datos
+  y facilita enormemente la construcción de ataques.
+  Nunca debe mostrarse información interna del servidor al usuario.
+-->
+<div class="card vuln-card">
+  <h3>⚠️ Consulta SQL ejecutada (esto no debería mostrarse)</h3>
+  <pre class="code-block">{{ raw_query }}</pre>
+</div>
+{% endif %}
+
+{% if books %}
+<div class="card">
+  <h3>Resultados ({{ books | length }} encontrados)</h3>
+  <table class="data-table">
+    <thead>
+      <tr><th>ID</th><th>Título</th><th>Autor</th><th>Categoría</th></tr>
+    </thead>
+    <tbody>
+      {% for book in books %}
+      <tr>
+        <td>{{ book["id"] }}</td>
+        <td><a href="{{ url_for('book_detail', book_id=book['id']) }}">{{ book["title"] }}</a></td>
+        <td>{{ book["author"] }}</td>
+        <td><span class="category-badge">{{ book["category"] }}</span></td>
+      </tr>
+      {% endfor %}
+    </tbody>
+  </table>
+</div>
+{% elif searched %}
+<div class="card">
+  <p>No se encontraron resultados.</p>
+</div>
+{% endif %}
+
+{% endblock %}

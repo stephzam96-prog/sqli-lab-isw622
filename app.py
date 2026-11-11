@@ -188,25 +188,19 @@ def login():
         #   usuario:  ' OR '1'='1' --
         #   password: (cualquier cosa)
         # ---------------------------------------------------
-        query = f"""
-            SELECT id, username, role
-            FROM   users
-            WHERE  username = '{username}'
-            AND    password = '{password}'
-        """
-
         conn = get_connection()
         try:
-            user = conn.execute(query).fetchone()
+            user = conn.execute(
+                "SELECT id, username, role, password FROM users WHERE username = ?",
+                (username,)
+            ).fetchone()
         except Exception as e:
-            # El error de SQLite se muestra directamente — también
-            # es información sensible que no debe exponerse.
             flash(f"Error en la base de datos: {e}", "error")
             conn.close()
             return render_template("login.html")
         conn.close()
 
-        if user:
+        if user and user["password"] == password:
             session["user_id"]  = user["id"]
             session["username"] = user["username"]
             session["role"]     = user["role"]
@@ -216,7 +210,7 @@ def login():
 
         # Nota: el detalle del log incluye la consulta completa,
         # y con ella la contraseña que escribió el usuario.
-        log_event("LOGIN_FAIL", username, f"query={query}")
+        log_event("LOGIN_FAIL", username, "credenciales invalidas")
         flash("Credenciales incorrectas.", "error")
 
     return render_template("login.html")

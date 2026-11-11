@@ -277,7 +277,7 @@ def search():
     # V-06: La consulta SQL cruda se pasa al template y se
     # muestra en pantalla — expone la estructura interna de la BD.
     return render_template(
-        "search.html", books=books, raw_query=raw_query,
+        "search.html", books=books,
         searched=searched, sort=sort
     )
 

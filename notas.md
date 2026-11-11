@@ -94,8 +94,8 @@ Observaciones generales
 
 Correcciones aplicadas (resumen para la defensa)
 
-V-01:
-V-02:
+V-01: Se cambio la consulta del login a parametrizada (?), separando la busqueda del usuario de la verificacion de contraseña, que ahora se hace en Python. Se probo que el login normal sigue funcionando y que admin' -- ya no entra. Commit: "V-01: consulta parametrizada en el login"
+V-02: Se cambio la consulta de busqueda a parametrizada (?) usando el patron %termino% como parametro. El ORDER BY se dejo igual por ahora (eso es V-10). Se probo que la busqueda normal (security, 4 resultados) sigue igual y que el payload UNION ya no trae nada raro. Commit: "V-02: consulta parametrizada en la busqueda"
 V-03:
 V-04:
 V-05:

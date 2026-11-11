@@ -92,7 +92,7 @@ Observaciones generales
 
 --------------------------------------------------
 
-Correcciones aplicadas
+Correcciones aplicadas (resumen para la defensa)
 
 🔴 V-01: Se cambio la consulta del login a parametrizada (?), separando la busqueda del usuario de la verificacion de contraseña, que ahora se hace en Python. Se probo que el login normal sigue funcionando y que admin' -- ya no entra. Commit: "V-01: consulta parametrizada en el login"
 
@@ -108,8 +108,8 @@ Correcciones aplicadas
 
 🟤 V-07: En layout.html el enlace Admin ahora solo se muestra si session.get('role') == 'admin'. Se probo que con analyst y student ya no aparece, y que con admin si sigue apareciendo. Commit (V-06 y V-07 juntas): "V-06 y V-07: ocultar consulta SQL expuesta y enlace Admin para roles no admin"
 
-⚫ V-08: Pendiente
+⚫ V-08: Se descomento Flask-WTF en requirements.txt, se activo CSRFProtect(app) en app.py, y se agrego el campo oculto csrf_token() en los formularios de login y busqueda. Se probo que el curl sin token ahora da 400 "CSRF token is missing", y que el login y busqueda normales desde el navegador siguen funcionando. Commit: "V-08: proteccion CSRF con Flask-WTF"
 
-🟥 V-09: Pendiente
+🟥 V-09: Se cambio la ruta a <int:book_id> (Flask solo acepta numeros enteros en la URL) y se parametrizo la consulta con ?. Se probo que /book/1 sigue mostrando el libro bien, y que el payload UNION ahora da 404 Not Found en vez de mezclar datos. Commit: "V-09: ruta int y consulta parametrizada en detalle de libro"
 
 🟩 V-10: Pendiente

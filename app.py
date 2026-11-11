@@ -249,6 +249,13 @@ def search():
         term = request.form.get("term", "")
         sort = request.form.get("sort", "title")
 
+        # V-10: lista blanca de columnas permitidas para ORDER BY.
+        # Los nombres de columna no se pueden parametrizar con "?",
+        # asi que se valida contra un conjunto fijo de valores conocidos.
+        COLUMNAS_ORDEN_PERMITIDAS = {"title", "author", "category"}
+        if sort not in COLUMNAS_ORDEN_PERMITIDAS:
+            sort = "title"
+
         # ---------------------------------------------------
         # V-02: SQL INJECTION EN BÚSQUEDA
         # El término de búsqueda se inserta directamente en
@@ -286,7 +293,7 @@ def search():
     )
 
 
-@app.route("/book/<book_id>")
+@app.route("/book/<int:book_id>")
 def book_detail(book_id):
     if not session.get("username"):
         flash("Debe iniciar sesión primero.", "error")
@@ -302,12 +309,13 @@ def book_detail(book_id):
     #   /book/1 OR 1=1
     #   /book/0 UNION SELECT 1, username, password, role FROM users
     # ---------------------------------------------------
-    query = f"SELECT id, title, author, category FROM books WHERE id = {book_id}"
-
     conn = get_connection()
     book = None
     try:
-        book = conn.execute(query).fetchone()
+        book = conn.execute(
+            "SELECT id, title, author, category FROM books WHERE id = ?",
+            (book_id,)
+        ).fetchone()
     except Exception as e:
         flash(f"Error en la base de datos: {e}", "error")
     conn.close()

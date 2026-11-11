@@ -31,6 +31,7 @@ from pathlib import Path
 
 from flask import Flask, render_template, request, redirect, url_for, session, flash
 from werkzeug.security import generate_password_hash, check_password_hash
+from flask_wtf import CSRFProtect
 
 BASE_DIR = Path(__file__).resolve().parent
 # LAB_DB_PATH permite al verificador usar una base de datos temporal.
@@ -44,6 +45,9 @@ app = Flask(__name__)
 # entorno y nunca commitearse al repositorio.
 # ---------------------------------------------------------------
 app.config["SECRET_KEY"] = os.environ.get("SECRET_KEY", "dev-secret-key-insegura-1234")
+
+# V-08: proteccion CSRF activada para todos los formularios POST
+csrf = CSRFProtect(app)
 
 
 # ---------------------------------------------------------------

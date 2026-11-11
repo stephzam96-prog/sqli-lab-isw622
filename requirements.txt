@@ -1,4 +1,4 @@
 Flask==3.0.3
 Werkzeug==3.0.3
-# V-08 (CSRF): descomente la línea siguiente y reconstruya con "docker compose up --build"
-# Flask-WTF==1.2.1
+# V-08 (CSRF): activado
+Flask-WTF==1.2.1
